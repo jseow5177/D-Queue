@@ -153,7 +153,7 @@ export default function OpeningHours(props) {
     return errorFields.length === 0;
   }
 
-  useSetStepVerifier(verifier, setVerifier, [operatingHours]);
+  useSetStepVerifier(verifier, setVerifier, operatingHours);
 
 
   const clickHandler = () =>{
@@ -168,7 +168,7 @@ export default function OpeningHours(props) {
   useEffect(() => {
     if (operatingHours.length === 0)
       clickHandler();
-  }, []);
+  });
 
   return (
     <div>

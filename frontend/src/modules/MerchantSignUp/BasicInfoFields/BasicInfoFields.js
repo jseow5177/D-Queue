@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Grid from "@material-ui/core/Grid";
 import CustomTextField from "../../../common/modules/CustomTextField/CustomTextField";
 
@@ -49,7 +49,7 @@ export default function BasicInfoFields(props) {
   }
 
   //Set this form's verifier
-  useSetStepVerifier(verifier, setVerifier, [merchantInfo]);
+  useSetStepVerifier(verifier, setVerifier, merchantInfo);
 
   return (
     <div className={styles.basicInfoDiv}>

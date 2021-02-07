@@ -19,7 +19,7 @@ function App() {
         <Header />
         <Switch>
           <Route path="/" exact component={Home} />
-          <Route path="/merchant/dashboard/:id" component={MerchantDashboard} />
+          <Route path="/merchant/dashboard/:name" component={MerchantDashboard} />
           <Route path="/merchant/:name" component={MerchantPage} />
           <Route path="/merchant-sign-up" component={MerchantSignUp} />
           <Route path="/browse" component={BrowsePage} />

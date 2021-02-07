@@ -21,7 +21,7 @@ async function run() {
 
     // Routes
     app.use("/user", userRouter);
-    app.use("/restaurant", restaurantRouter);
+    app.use("/api/restaurant", restaurantRouter);
 
     // Error Handler (Must be last piece of middleware)
     app.use(errorHandler);

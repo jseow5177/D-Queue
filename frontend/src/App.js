@@ -9,6 +9,7 @@ import MerchantSignUp from "./modules/MerchantSignUp/MerchantSignUp";
 import MerchantDashboard from "./modules/MerchantDashboard/MerchantDashboard";
 import BrowsePage from "./modules/BrowsePage/BrowsePage";
 import UserSignUp from "./modules/UserSignUp/UserSignUp";
+import UserQueueList from "./modules/UserQueueList/UserQueueList";
 
 import store from "./store";
 
@@ -19,11 +20,15 @@ function App() {
         <Header />
         <Switch>
           <Route path="/" exact component={Home} />
-          <Route path="/merchant/dashboard/:name" component={MerchantDashboard} />
+          <Route
+            path="/merchant/dashboard/:name"
+            component={MerchantDashboard}
+          />
           <Route path="/merchant/:name" component={MerchantPage} />
-          <Route path="/merchant-sign-up" component={MerchantSignUp}/>
+          <Route path="/merchant-sign-up" component={MerchantSignUp} />
           <Route path="/browse" component={BrowsePage} />
           <Route path="/sign/:action" component={UserSignUp} />
+          <Route path="/user/queueList" component={UserQueueList} />
         </Switch>
       </Provider>
     </Router>

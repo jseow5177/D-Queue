@@ -57,8 +57,16 @@ const ProfileNav = ({ username }) => {
           <MenuItem onClick={handleClose}>Profile</MenuItem>
         </Link>
         {!user.is_admin && (
-          <Link to="/user/queueList" className={styles.navLink}>
+          <Link to={`/user/queueList/${user._id}`} className={styles.navLink}>
             <MenuItem onClick={handleClose}>Queue</MenuItem>
+          </Link>
+        )}
+        {user.is_admin && (
+          <Link
+            to={`/merchant/dashboard/${user._id}`}
+            className={styles.navLink}
+          >
+            <MenuItem onClick={handleClose}>Dashboard</MenuItem>
           </Link>
         )}
         <MenuItem onClick={handleLogOut}>Logout</MenuItem>

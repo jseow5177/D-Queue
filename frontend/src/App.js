@@ -34,7 +34,7 @@ function App() {
               redirect="/sign/merchant"
             />
             <PrivateRoute
-              path="/user/queueList"
+              path="/user/queueList/:id"
               component={UserQueueList}
               redirect="/sign/user"
             />

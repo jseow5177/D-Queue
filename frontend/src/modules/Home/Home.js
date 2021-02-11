@@ -9,7 +9,7 @@ import CategorySummary from "./CategorySummary/CategorySummary";
 import { setAuth } from "../../common/utils";
 
 export default function Home(props) {
-  useEffect(async () => {
+  useEffect(() => {
     setAuth();
   }, []);
 

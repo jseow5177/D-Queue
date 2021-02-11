@@ -31,7 +31,7 @@ const ProfileNav = ({ username }) => {
     <div>
       <Button
         onClick={handleClick}
-        disableRipple="true"
+        disableRipple={true}
         className={styles.profileContainer}
       >
         <AccountCircle classes={{ root: styles.iconRoot }} />
@@ -39,12 +39,13 @@ const ProfileNav = ({ username }) => {
       </Button>
       <Menu
         anchorEl={anchorEle}
+        getContentAnchorEl={null}
         anchorOrigin={{
           vertical: "bottom",
           horizontal: "center",
         }}
         transformOrigin={{
-          vertical: "bottom",
+          vertical: "top",
           horizontal: "center",
         }}
         onClose={handleClose}

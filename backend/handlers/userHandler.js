@@ -156,8 +156,11 @@ export const enterQueueHandler = async (req, res, next) => {
     }
 
     const isInQueue = await Queue.findOne({
-      user: userID,
-      restaurant: restaurantID,
+      $and: [
+        { restaurant: restaurantID },
+        { user: userID },
+        { state: { $lte: QUEUESTATE.NOTIFIED } },
+      ],
     });
 
     if (isInQueue) {
@@ -184,22 +187,29 @@ export const enterQueueHandler = async (req, res, next) => {
   }
 };
 
-export const getQueueNumHandler = async (req, res, next) => {
-  const { restaurantID, userID } = req.body;
+export const getQueueListHandler = async (req, res, next) => {
+  const { userID } = req.body;
 
   try {
-    const queue = await Queue.findOne({
-      restaurant: restaurantID,
-      user: userID,
-    });
+    let queueList = await Queue.find({
+      $and: [{ user: userID }, { state: { $lte: QUEUESTATE.NOTIFIED } }],
+    })
+      .populate("restaurant")
+      .lean();
 
-    const queueNum = await getQueueNumber(queue);
+    queueList = await Promise.all(
+      queueList.map(async (queue) => {
+        let queueNum = await getQueueNumber(queue);
 
-    if (queueNum instanceof Error) {
-      return next(new NotFoundError("Unable to find queue number"));
-    }
+        if (queueNum instanceof Error) {
+          return new NotFoundError("Unable to find queue number");
+        }
 
-    res.status(200).json({ queueNumber: queueNum });
+        return { ...queue, queueNum: queueNum };
+      })
+    );
+
+    res.status(200).json(queueList);
   } catch (error) {
     next(error);
   }

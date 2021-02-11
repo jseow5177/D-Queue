@@ -6,15 +6,25 @@ import {
   forgotPasswordHandler,
   resetPassword,
   logoutHandler,
+  enterQueueHandler,
+  getQueueNumHandler,
+  checkAuthHandler,
 } from "../handlers/userHandler.js";
 import { isAuthenticated } from "../middleware/auth.js";
-var router = express.Router();
+var userRouter = express.Router();
 
-router.post("/signup", signupHandler);
-router.post("/login", loginHandler);
-router.get("/logout", logoutHandler);
-router.post("/forgotPassword", forgotPasswordHandler);
-router.post("/resetPassword/:signedToken", resetPassword);
-router.get("/private-test", isAuthenticated, privateHandler);
+// Auth
+userRouter.get("/checkAuth", isAuthenticated, checkAuthHandler);
+userRouter.get("/logout", logoutHandler);
+userRouter.get("/private-test", isAuthenticated, privateHandler);
 
-export default router;
+userRouter.post("/forgotPassword", forgotPasswordHandler);
+userRouter.post("/login", loginHandler);
+userRouter.post("/signup", signupHandler);
+userRouter.post("/resetPassword/:signedToken", resetPassword);
+
+// Queue
+userRouter.get("/queueNum", getQueueNumHandler);
+userRouter.post("/enterQueue", enterQueueHandler);
+
+export default userRouter;

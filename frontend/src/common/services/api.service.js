@@ -1,35 +1,37 @@
 import TokenService from './token.service'
 import axios from 'axios'
 
-const ApiService = {
+const customAxios = axios.create({
+  baseURL: "/api"
+})
 
+const ApiService = {
   setAuthHeader() {
     /**
      * Set default header which will be sent with every request
      */
-    axios.defaults.headers.common.Authorization = `Bearer ${TokenService.getAccessToken()}`
+    customAxios.defaults.headers.common.Authorization = `Bearer ${TokenService.getAccessToken()}`
   },
 
   removeHeader() {
-    axios.defaults.headers.common = {}
+    customAxios.defaults.headers.common = {}
   },
 
   get(resource, params = null) {
-    return axios.get(resource, { params })
+    return customAxios.get(resource, { params })
   },
 
   post(resource, data) {
-    return axios.post(resource, data)
+    return customAxios.post(resource, data)
   },
 
   put(resource, data) {
-    return axios.put(resource, data)
+    return customAxios.put(resource, data)
   },
 
   delete(resource) {
-    return axios.delete(resource)
+    return customAxios.delete(resource)
   }
-
 }
 
 export default ApiService

@@ -1,5 +1,6 @@
 import { useHistory, Link } from "react-router-dom";
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 
 import ApiService from "../../../services/api.service";
 import { setLogOut } from "../../../../actions/authActions";
@@ -9,6 +10,7 @@ import { AccountCircle } from "@material-ui/icons";
 import { Button, Menu, MenuItem } from "@material-ui/core";
 
 const ProfileNav = ({ username }) => {
+  const user = useSelector((state) => state.auth);
   let history = useHistory();
   const [anchorEle, setAnchorEle] = useState(null);
 
@@ -55,6 +57,19 @@ const ProfileNav = ({ username }) => {
         <Link to="/user/profile" className={styles.navLink}>
           <MenuItem onClick={handleClose}>Profile</MenuItem>
         </Link>
+        {!user.is_admin && (
+          <Link to={`/user/queueList/${user._id}`} className={styles.navLink}>
+            <MenuItem onClick={handleClose}>Queue</MenuItem>
+          </Link>
+        )}
+        {user.is_admin && (
+          <Link
+            to={`/merchant/dashboard/${user._id}`}
+            className={styles.navLink}
+          >
+            <MenuItem onClick={handleClose}>Dashboard</MenuItem>
+          </Link>
+        )}
         <MenuItem onClick={handleLogOut}>Logout</MenuItem>
       </Menu>
     </div>

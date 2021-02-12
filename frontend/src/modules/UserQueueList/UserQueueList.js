@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 
+import ApiService from "../../common/services/api.service";
 import { useWindowDimensions, mobileThreshold } from "../../common/utils";
 import styles from "./UserQueueList.module.scss";
 
 import { Grid, CircularProgress } from "@material-ui/core";
 import MerchantCard from "./MerchantCard/MerchantCard";
 import SectionTitle from "../../common/modules/SectionTitle/SectionTitle";
-import ApiService from "../../common/services/api.service";
 
 const UserQueueList = (props) => {
   const { params } = props.match;
@@ -16,16 +16,16 @@ const UserQueueList = (props) => {
 
   useEffect(async () => {
     const getQueueList = async () => {
-      setLoading(true);
       const payload = { userID: params.id };
       const res = await ApiService.post("/user/queueList", payload);
       if (res.status === 200) {
         setQueueList(res.data);
       }
-      setLoading(false);
     };
 
-    getQueueList();
+    setLoading(true);
+    await getQueueList();
+    setLoading(false);
 
     const interval = setInterval(async () => {
       await getQueueList();

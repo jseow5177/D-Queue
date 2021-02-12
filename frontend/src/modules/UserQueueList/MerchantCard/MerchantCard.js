@@ -24,7 +24,7 @@ const MerchantCard = ({ info, queueList, setQueueList }) => {
 
   return (
     <Grid item>
-      <Paper elevation={5}>
+      <Paper elevation={5} className={styles.cardContainer}>
         <Grid container>
           <Grid item xs={4} md={3}>
             <Link to={`/merchant/${restaurant._id}`}>

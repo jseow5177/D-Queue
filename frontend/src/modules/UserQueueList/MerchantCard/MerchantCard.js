@@ -18,8 +18,12 @@ const MerchantCard = ({ info, queueList, setQueueList }) => {
     };
 
     const res = await ApiService.put("/restaurant/updateQueueState", payload);
-    const newList = queueList.filter((queueInfo) => queueInfo._id !== info._id);
-    setQueueList(newList);
+    if (res.status === 200) {
+      const newList = queueList.filter(
+        (queueInfo) => queueInfo._id !== info._id
+      );
+      setQueueList(newList);
+    }
   };
 
   return (

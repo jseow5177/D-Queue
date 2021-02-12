@@ -11,9 +11,9 @@ const UserQueueList = () => {
   const { width } = useWindowDimensions();
   return (
     <div
-      className={`${
-        width <= mobileThreshold ? styles.mobileWidth : styles.desktopWidth
-      } ${styles.listDiv}`}
+      className={`${width <= mobileThreshold && styles.mobileWidth} ${
+        styles.listDiv
+      }`}
     >
       <SectionTitle title="Queue List" />
       <Grid container spacing={5} className={styles.listGrid}>

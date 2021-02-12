@@ -81,8 +81,11 @@ export const updateQueueStateHandler = async (req, res, next) => {
 
   try {
     let queue = await Queue.findOne({
-      user: userID,
-      restaurant: restaurantID,
+      $and: [
+        { restaurant: restaurantID },
+        { user: userID },
+        { state: { $lte: QUEUESTATE.NOTIFIED } },
+      ],
     });
 
     if (!queue) {

@@ -10,6 +10,7 @@ import {
   Typography,
   Grid,
 } from "@material-ui/core";
+import { Link } from "react-router-dom";
 
 export default function CardItem(props) {
   return (
@@ -17,11 +18,14 @@ export default function CardItem(props) {
       <Card>
         <CardActionArea>
           {props.image && (
-            <CardMedia
-              className={styles.cardImage}
-              component="img"
-              image={props.image}
-            ></CardMedia>
+            <Link to={`/merchant/${props.id}`}>
+              <CardMedia
+                className={styles.cardImage}
+                component="img"
+                to={`/merchant/${props.id}`}
+                image={props.image}
+              ></CardMedia>
+            </Link>
           )}
           <CardContent>
             <Typography variant="h5">{props.title}</Typography>
@@ -31,7 +35,11 @@ export default function CardItem(props) {
         {(props.queue || props.info) && (
           <CardActions>
             {props.queue && <Button>Queue</Button>}
-            {props.info && <Button>More info</Button>}
+            {props.info && (
+              <Button component={Link} to={`/merchant/${props.id}`}>
+                More info
+              </Button>
+            )}
           </CardActions>
         )}
       </Card>

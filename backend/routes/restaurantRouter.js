@@ -1,6 +1,7 @@
 import express from "express";
 import {
   getQueueListHandler,
+  getRestaurantListHandler,
   registerHandler,
   retrieveHandler,
   updateQueueStateHandler,
@@ -8,6 +9,7 @@ import {
 
 const restaurantRouter = express.Router();
 
+restaurantRouter.get("/restaurantList", getRestaurantListHandler);
 restaurantRouter.get("/retrieve", retrieveHandler);
 restaurantRouter.get("/queueList", getQueueListHandler);
 restaurantRouter.post("/register", registerHandler);

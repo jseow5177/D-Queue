@@ -35,8 +35,9 @@ export const registerHandler = async (req, res, next) => {
 };
 
 export const retrieveHandler = async (req, res, next) => {
-  const { restaurantName } = req.body;
-  const restaurantObj = await Restaurant.findOne({ restaurantName });
+  const restaurantId = req.query.restaurantId;
+
+  const restaurantObj = await Restaurant.findOne({ _id: restaurantId });
   if (!restaurantObj)
     return next(
       new NotFoundError(`No restaurant with name ${restaurantName} found`)
@@ -47,6 +48,27 @@ export const retrieveHandler = async (req, res, next) => {
     openingHours: JSON.parse(restaurantObj._doc.openingHours),
     success: true,
   });
+};
+
+export const getRestaurantListHandler = async (req, res, next) => {
+  // Pagination
+  let page_size = parseInt(req.query.page_size);
+  let page_num = parseInt(req.query.page_num);
+  let skips = page_size * (page_num - 1);
+
+  try {
+    const restaurantList = await Restaurant.find()
+      .sort({ _id: -1 })
+      .skip(skips)
+      .limit(page_size);
+
+    if (!restaurantList) {
+      return next(new NotFoundError("No restaurant is found"));
+    }
+    res.status(200).json(restaurantList);
+  } catch (error) {
+    return next(error);
+  }
 };
 
 export const getQueueListHandler = async (req, res, next) => {

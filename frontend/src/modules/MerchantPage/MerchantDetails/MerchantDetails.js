@@ -9,12 +9,12 @@ import ImageSummarySection from "../../../common/modules/ImageSummarySection/Ima
 function MerchantDescription(props) {
   return (
     <div className={styles.merchantDescContainer}>
-      <Typography variant="h4">{props.merchantName}</Typography>
+      <Typography variant="h4">{props.info.restaurantName}</Typography>
       <Typography className={styles.descField} variant="body1">
-        Location: {props.info.location}
+        Location: {props.info.address1 + " " + props.info.postCode}
       </Typography>
       <Typography className={styles.descField} variant="body1">
-        Phone: {props.info.phone}
+        Phone: {props.info.contact}
       </Typography>
       <Typography className={styles.descField} variant="body1">
         Current Serving Number: {props.info.currentNumber}

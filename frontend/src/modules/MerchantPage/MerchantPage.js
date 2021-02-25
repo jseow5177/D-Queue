@@ -14,6 +14,7 @@ const info = {
   phone: "123456789",
   currentNumber: 1,
   averageWaiting: 40,
+  id: "60211093ba2006279074b3c3"
 };
 
 export default function MerchantPage(props) {

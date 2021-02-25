@@ -5,8 +5,19 @@ import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import styles from "./MerchantDetails.module.scss";
 import ImageSummarySection from "../../../common/modules/ImageSummarySection/ImageSummarySection";
+import { enterQueue } from "../../../actions/queueActions.js";
+import { useSelector } from "react-redux"
 
 function MerchantDescription(props) {
+  const user = useSelector(state => state.auth);
+  const clickHandler = React.useCallback(() => {
+    //Check if user is logged in first
+    if (user.userID !== undefined) {
+      //Get restaurantID from props
+      enterQueue({ userID: user.userID, restaurantID: props.id, pax: 1 })
+    }
+  }, [user.userID, props.id]);
+
   return (
     <div className={styles.merchantDescContainer}>
       <Typography variant="h4">{props.merchantName}</Typography>
@@ -22,10 +33,10 @@ function MerchantDescription(props) {
       <Typography className={styles.descField} variant="body1">
         Average Waiting time: {props.info.averageWaiting} minutes
       </Typography>
-      <Button className={styles.queueBtn} variant="contained">
+      <Button className={styles.queueBtn} variant="contained" onClick={clickHandler}>
         Queue
       </Button>
-    </div>
+    </div >
   );
 }
 

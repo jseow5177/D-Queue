@@ -18,13 +18,29 @@ export default function MerchantSignUp() {
   const [merchantInfo, setMerchantInfo] = React.useState({});
   const [operatingHours, setOperatingHours] = React.useState([]);
   const [imageArr, setImageArr] = React.useState([]);
+  const [rawImgArr, setRawImgArr] = React.useState([]);
   const [verifier, setVerifier] = React.useState();
 
   const submitForm = React.useCallback(async () => {
     const sortedOperatingHours = sortOperatingHours(operatingHours);
-    const concatData = {...merchantInfo, openingHours: sortedOperatingHours, admin: "false"};
-    const res = await ApiService.post("/restaurant/register", concatData);
-    
+    const concatData = {
+      ...merchantInfo,
+      openingHours: sortedOperatingHours,
+      admin: "false",
+    };
+
+    let data = new FormData();
+
+    for (let key in concatData) {
+      data.append(key, concatData[key]);
+    }
+
+    rawImgArr.forEach((img) => {
+      data.append("upload", img);
+    });
+
+    const res = await ApiService.post("/restaurant/register", data);
+
     return res;
   }, [merchantInfo, operatingHours]);
 
@@ -53,22 +69,26 @@ export default function MerchantSignUp() {
       <UploadPhotos
         imageArr={imageArr}
         setImageArr={setImageArr}
+        rawImgArr={rawImgArr}
+        setRawImgArr={setRawImgArr}
         width={width}
       />
     ),
     generateStepContent(
       "Review",
       "Make sure everything is correct!",
-      <Review
-        merchantInfo={merchantInfo}
-        operatingHours={operatingHours}
-      />
-    )
+      <Review merchantInfo={merchantInfo} operatingHours={operatingHours} />
+    ),
   ];
 
   return (
     <>
-      <DesktopStepper stepContent={stepContent} width={width} verifier={verifier} submit={submitForm}/>
+      <DesktopStepper
+        stepContent={stepContent}
+        width={width}
+        verifier={verifier}
+        submit={submitForm}
+      />
     </>
   );
 }

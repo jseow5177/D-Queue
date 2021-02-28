@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Grid from "@material-ui/core/Grid";
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
 import CardMedia from "@material-ui/core/CardMedia";
 
 import styles from "./ImageSummarySection.module.scss";
+import { buffer_to_blobUrl } from "../../utils";
 
 function ImageRow(props) {
   return (
@@ -42,10 +43,22 @@ function TitleImage(props) {
 
 export default function ImageSummarySection(props) {
   const [currTitleImage, setCurrTitleImage] = React.useState(0);
+  const [images, setImages] = React.useState([]);
   function onImageClick(event) {
     setCurrTitleImage(event.target.id);
   }
-  const {images} = props;
+
+  const { images: imageArr } = props;
+  useEffect(() => {
+    const imgArr = [];
+    imageArr.map((img) => {
+      img = buffer_to_blobUrl(img.data);
+
+      imgArr.push(img);
+    });
+    setImages(imgArr);
+  }, []);
+
   return (
     <>
       <TitleImage image={images[currTitleImage]} />

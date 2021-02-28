@@ -1,6 +1,7 @@
 import { Restaurant } from "../models/restaurantModel.js";
 import { NotFoundError } from "../utils/errorResponse.js";
 import { Queue, QUEUESTATE } from "../models/queueModel.js";
+import sharp from "sharp"
 
 export const registerHandler = async (req, res, next) => {
   // const openingHoursFormat = [
@@ -14,6 +15,16 @@ export const registerHandler = async (req, res, next) => {
   // ]
 
   try {
+    const imgArr = [];
+    const _ = await Promise.all(
+      req.files.map(
+        async (file) => {
+          const imgBuffer = await sharp(file.buffer).resize({ width: 300, height: 300}).png().toBuffer()
+          imgArr.push(imgBuffer);
+        }
+      )
+    );
+    console.log(imgArr)
     const newRestaurant = await Restaurant.create({
       restaurantName: req.body["Restaurant Name"],
       address1: req.body["Address Line 1"],
@@ -26,8 +37,9 @@ export const registerHandler = async (req, res, next) => {
       email: req.body["Email"],
       openingHours: JSON.stringify(req.body["openingHours"]),
       admin: req.body["admin"],
+      image: imgArr,
     });
-
+    console.log(newRestaurant)
     res.sendStatus(200);
   } catch (error) {
     return next(error);
@@ -131,3 +143,13 @@ export const updateQueueStateHandler = async (req, res, next) => {
     return next(error);
   }
 };
+
+export const deleteRestaurantHandler = async (req, res, next) => {
+  try{
+    
+    const result = Restaurant.remove();
+    res.status(200).json(result);
+  } catch (error) {
+    return next(error)
+  }
+}

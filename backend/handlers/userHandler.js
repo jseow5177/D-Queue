@@ -1,4 +1,5 @@
 import jwt from "jsonwebtoken";
+import { io } from "./socketHandler.js";
 
 import {
   UnauthorizedError,
@@ -181,6 +182,7 @@ export const enterQueueHandler = async (req, res, next) => {
       return next(new NotFoundError("Unable to find queue number"));
     }
 
+    io.of(userID).emit("user enter queue", queue);
     res.status(200).json({ queueNumber: queueNum });
   } catch (error) {
     next(error);

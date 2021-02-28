@@ -6,6 +6,7 @@ import app from "./app.js";
 import userRouter from "./routes/userRouter.js";
 import restaurantRouter from "./routes/restaurantRouter.js";
 import errorHandler from "./handlers/errorHandler.js";
+import { initSocket } from "./handlers/socketHandler.js";
 
 const PORT = config.port;
 const mongoUri = config.mongoUri;
@@ -27,10 +28,12 @@ async function run() {
     app.use(errorHandler);
 
     // Listen to port
-    app.listen(PORT, (err) => {
+    const server = app.listen(PORT, (err) => {
       if (err) throw err;
       console.log(`App is listening at port ${PORT}!`);
     });
+
+    const io = initSocket(server);
   } catch (error) {
     console.log(error);
   }

@@ -22,7 +22,11 @@ function MerchantDescription(props) {
       <Typography className={styles.descField} variant="body1">
         Average Waiting time: {props.info.averageWaiting} minutes
       </Typography>
-      <Button className={styles.queueBtn} variant="contained">
+      <Button
+        className={styles.queueBtn}
+        onClick={props.queueHandler}
+        variant="contained"
+      >
         Queue
       </Button>
     </div>
@@ -41,6 +45,7 @@ export default function MerchantDetails(props) {
             <MerchantDescription
               info={props.info}
               merchantName={props.merchantName}
+              queueHandler={props.queueHandler}
             />
           </Grid>
         </Grid>

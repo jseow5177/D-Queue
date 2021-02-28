@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
+import { useSelector } from "react-redux";
 
 import Home from "./modules/Home/Home";
 import Header from "./common/modules/Header/Header";
@@ -14,13 +15,43 @@ import UserQueueList from "./modules/UserQueueList/UserQueueList";
 import PrivateRoute from "./components/PrivateRoute";
 
 import { store, persistor } from "./store";
+import { createSocket, deleteSocket } from "./sockets/sockets";
 
 function App() {
+  const Setup = () => {
+    const user = useSelector((state) => state.auth);
+    const [userID, setUserID] = useState("");
+
+    useEffect(() => {
+      if (Object.keys(user).length > 0) {
+        const socket = createSocket(user._id);
+        console.log("Created a socket: " + user._id);
+
+        socket.on("message", (arg) => {
+          console.log(arg);
+        });
+
+        socket.on("user enter queue", (arg) => {
+          console.log(arg);
+        });
+
+        setUserID(user._id);
+      } else if (Object.keys(user).length <= 0) {
+        if (userID !== "") {
+          deleteSocket(userID);
+          console.log("Deleted socket: " + userID);
+        }
+      }
+    }, [user]);
+
+    return <></>;
+  };
   return (
     <Router>
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
           <Header />
+          <Setup />
           <Switch>
             <Route path="/" exact component={Home} />
             <Route path="/merchant/:name" exact component={MerchantPage} />

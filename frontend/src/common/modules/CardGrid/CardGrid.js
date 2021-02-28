@@ -3,8 +3,10 @@ import { CircularProgress, Grid } from "@material-ui/core";
 
 import styles from "./CardGrid.module.scss";
 import CardItem from "../CardItem/CardItem";
+import { buffer_to_blobUrl } from "../../utils";
 
 export default function CardGrid(props) {
+  
   return (
     <div className={styles.cardGrid}>
       <Grid container spacing={Number(props.spacing)} justify={props.justify}>
@@ -20,7 +22,7 @@ export default function CardGrid(props) {
                 title={item.restaurantName}
                 queue={true}
                 info={true}
-                image="https://images.unsplash.com/photo-1504674900247-0877df9cc836?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxleHBsb3JlLWZlZWR8M3x8fGVufDB8fHw%3D&w=1000&q=80"
+                image={item.image[0] && buffer_to_blobUrl(item.image[0].data)}
               />
             );
           })

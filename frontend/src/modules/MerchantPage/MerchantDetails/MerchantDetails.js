@@ -35,12 +35,12 @@ export default function MerchantDetails(props) {
       <Paper className={styles.merchantPaper}>
         <Grid container justify="flex-start">
           <Grid item sm={12} md={6}>
-            <ImageSummarySection images={props.images} />
+            <ImageSummarySection images={props.info.image} />
           </Grid>
           <Grid item xs={12} sm={6}>
             <MerchantDescription
               info={props.info}
-              merchantName={props.merchantName}
+              merchantName={props.info.restaurantName}
             />
           </Grid>
         </Grid>

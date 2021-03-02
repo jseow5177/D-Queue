@@ -17,7 +17,7 @@ const MerchantCard = ({ info, queueList, setQueueList }) => {
       queueState: QUEUESTATE.SKIPPED,
     };
 
-    const res = await ApiService.put("/restaurant/updateQueueState", payload);
+    const res = await ApiService.post("/restaurant/updateQueueState", payload);
     if (res.status === 200) {
       const newList = queueList.filter(
         (queueInfo) => queueInfo._id !== info._id

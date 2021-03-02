@@ -1,7 +1,9 @@
 import { Restaurant } from "../models/restaurantModel.js";
+import { User } from "../models/userModel.js";
 import { NotFoundError } from "../utils/errorResponse.js";
 import { Queue, QUEUESTATE } from "../models/queueModel.js";
-import sharp from "sharp"
+import sharp from "sharp";
+import { io } from "./socketHandler.js";
 
 export const registerHandler = async (req, res, next) => {
   // const openingHoursFormat = [
@@ -17,14 +19,15 @@ export const registerHandler = async (req, res, next) => {
   try {
     const imgArr = [];
     const _ = await Promise.all(
-      req.files.map(
-        async (file) => {
-          const imgBuffer = await sharp(file.buffer).resize({ width: 300, height: 300}).png().toBuffer()
-          imgArr.push(imgBuffer);
-        }
-      )
+      req.files.map(async (file) => {
+        const imgBuffer = await sharp(file.buffer)
+          .resize({ width: 300, height: 300 })
+          .png()
+          .toBuffer();
+        imgArr.push(imgBuffer);
+      })
     );
-    console.log(imgArr)
+
     const newRestaurant = await Restaurant.create({
       restaurantName: req.body["Restaurant Name"],
       address1: req.body["Address Line 1"],
@@ -39,7 +42,12 @@ export const registerHandler = async (req, res, next) => {
       admin: req.body["admin"],
       image: imgArr,
     });
-    console.log(newRestaurant)
+
+    const user = await User.findById(req.body.userID);
+
+    user.restaurant = newRestaurant._id;
+    user = await user.save();
+
     res.sendStatus(200);
   } catch (error) {
     return next(error);
@@ -84,7 +92,7 @@ export const getRestaurantListHandler = async (req, res, next) => {
 };
 
 export const getQueueListHandler = async (req, res, next) => {
-  const { restaurantID } = req.body;
+  const { restaurantID } = req.query;
 
   try {
     let queueList = await Queue.find({
@@ -136,6 +144,24 @@ export const updateQueueStateHandler = async (req, res, next) => {
 
     queue = await queue.save();
 
+    if (queueState === QUEUESTATE.NOTIFIED) {
+      io.of(userID).emit("notify", queue);
+    } else {
+      io.of(restaurantID).emit("update queue", queue);
+      io.of(userID).emit("update queue", queue);
+
+      let full_queue = await Queue.find({
+        $and: [
+          { restaurant: restaurantID },
+          { state: { $lte: QUEUESTATE.NOTIFIED } },
+        ],
+      });
+
+      full_queue.forEach((queue) => {
+        io.of(queue.user).emit("update queue", queue);
+      });
+    }
+
     res
       .status(200)
       .json({ success: true, message: `Updated queue state to ${queueState}` });
@@ -143,13 +169,3 @@ export const updateQueueStateHandler = async (req, res, next) => {
     return next(error);
   }
 };
-
-export const deleteRestaurantHandler = async (req, res, next) => {
-  try{
-    
-    const result = Restaurant.remove();
-    res.status(200).json(result);
-  } catch (error) {
-    return next(error)
-  }
-}

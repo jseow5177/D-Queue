@@ -1,21 +1,21 @@
 import React, { useState, useEffect } from "react";
-<<<<<<< HEAD
 import { useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
-=======
 
->>>>>>> store_img
 import ApiService from "../../common/services/api.service";
-import styles from "./MerchantPage.module.scss"
+import { createSocket } from "../../sockets/sockets";
+import styles from "./MerchantPage.module.scss";
 
-import { CircularProgress} from "@material-ui/core";
+import { CircularProgress } from "@material-ui/core";
 import MerchantDetails from "./MerchantDetails/MerchantDetails";
+import QueueDialog from "../../common/modules/QueueDialog/QueueDialog";
 
 export default function MerchantPage(props) {
   let history = useHistory();
   const { match } = props;
   const [restaurantDetail, setRestaurantDetail] = useState({});
   const [loading, setLoading] = useState(true);
+  const [dialog, setDialog] = useState(false);
   const user = useSelector((state) => state.auth);
 
   useEffect(async () => {
@@ -28,39 +28,26 @@ export default function MerchantPage(props) {
     setLoading(false);
   }, []);
 
-  const queueHandler = async () => {
-    const payload = {
-      userID: user._id,
-      restaurantID: restaurantDetail._id,
-      pax: 3,
-    };
-
-    try {
-      let res = await ApiService.post("/user/enterQueue", payload);
-    } catch (error) {
-      console.log(error.message);
-    }
-
-    history.push(`/user/queueList/${user._id}`);
-  };
+  const buttonHandler = () => setDialog(true);
 
   return (
-<<<<<<< HEAD
-    <>
-      <MerchantDetails
-        info={restaurantDetail}
-        images={marcheImages}
-        queueHandler={queueHandler}
-      ></MerchantDetails>
-    </>
-=======
     <div>
       {loading ? (
-        <CircularProgress className={styles.loadingIcon}/>
+        <CircularProgress className={styles.loadingIcon} />
       ) : (
-        <MerchantDetails info={restaurantDetail}></MerchantDetails>
+        <>
+          <QueueDialog
+            dialog={dialog}
+            setDialog={setDialog}
+            user={user}
+            restaurantDetail={restaurantDetail}
+          />
+          <MerchantDetails
+            info={restaurantDetail}
+            buttonHandler={buttonHandler}
+          ></MerchantDetails>
+        </>
       )}
     </div>
->>>>>>> store_img
   );
 }

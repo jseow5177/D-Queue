@@ -24,7 +24,7 @@ function MerchantDescription(props) {
       </Typography>
       <Button
         className={styles.queueBtn}
-        onClick={props.queueHandler}
+        onClick={props.buttonHandler}
         variant="contained"
       >
         Queue
@@ -45,7 +45,7 @@ export default function MerchantDetails(props) {
             <MerchantDescription
               info={props.info}
               merchantName={props.info.restaurantName}
-              queueHandler={props.queueHandler}
+              buttonHandler={props.buttonHandler}
             />
           </Grid>
         </Grid>

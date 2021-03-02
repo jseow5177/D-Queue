@@ -1,10 +1,15 @@
 import * as sio from "socket.io-client";
 
-const socketObj = {};
+export const socketObj = {};
 
 export const createSocket = (ns) => {
-  ns = "/" + ns;
+  let socket = getSocket(ns);
 
+  if (socket !== undefined) {
+    return socket;
+  }
+
+  ns = "/" + ns;
   socketObj[ns] = sio.io(ns, { path: "/websocket" });
   return socketObj[ns];
 };
@@ -27,4 +32,9 @@ export const deleteSocket = (ns) => {
 export const addSocketEventListener = (ns, event, func) => {
   ns = "/" + ns;
   socketObj[ns].io(event, func);
+};
+
+export const getSocket = (ns) => {
+  ns = "/" + ns;
+  return socketObj[ns];
 };

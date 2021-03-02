@@ -29,6 +29,7 @@ const userSchema = new Schema(
       default: false,
     },
     resetPasswordToken: String,
+    restaurant: { type: Schema.Types.ObjectId, ref: "Restaurant" },
   },
   { timestamps: true }
 );

@@ -144,18 +144,6 @@ export const enterQueueHandler = async (req, res, next) => {
   const { userID, restaurantID, pax } = req.body;
 
   try {
-    const user = await User.findById(userID);
-
-    if (!user) {
-      return next(new NotFoundError("Invalid user"));
-    }
-
-    const restaurant = await Restaurant.findById(restaurantID);
-
-    if (!restaurant) {
-      return next(new NotFoundError("Invalid restaurant"));
-    }
-
     const isInQueue = await Queue.findOne({
       $and: [
         { restaurant: restaurantID },
@@ -168,7 +156,7 @@ export const enterQueueHandler = async (req, res, next) => {
       return next(new DuplicateFieldError("User is already in queue"));
     }
 
-    const queue = await Queue.create({
+    let queue = await Queue.create({
       restaurant: restaurantID,
       user: userID,
       pax: pax,
@@ -176,14 +164,10 @@ export const enterQueueHandler = async (req, res, next) => {
       state: QUEUESTATE.WAITING,
     });
 
-    const queueNum = await getQueueNumber(queue);
+    queue = await Queue.populate(queue, { path: "user" });
 
-    if (queueNum instanceof Error) {
-      return next(new NotFoundError("Unable to find queue number"));
-    }
-
-    io.of(userID).emit("user enter queue", queue);
-    res.status(200).json({ queueNumber: queueNum });
+    io.of(restaurantID).emit("user enter queue", queue);
+    res.sendStatus(200);
   } catch (error) {
     next(error);
   }
@@ -196,7 +180,7 @@ export const getQueueListHandler = async (req, res, next) => {
     let queueList = await Queue.find({
       $and: [{ user: userID }, { state: { $lte: QUEUESTATE.NOTIFIED } }],
     })
-      .populate("restaurant")
+      .populate("restaurant", ["restaurantName", "contact"])
       .lean();
 
     queueList = await Promise.all(

@@ -1,6 +1,5 @@
 import express from "express";
 import {
-  deleteRestaurantHandler,
   getQueueListHandler,
   getRestaurantListHandler,
   registerHandler,
@@ -16,7 +15,6 @@ restaurantRouter.get("/restaurantList", getRestaurantListHandler);
 restaurantRouter.get("/retrieve", retrieveHandler);
 restaurantRouter.get("/queueList", getQueueListHandler);
 restaurantRouter.post("/register", upload.array("upload", 10), registerHandler);
-restaurantRouter.put("/updateQueueState", updateQueueStateHandler);
-restaurantRouter.get("/deleteRestaurants", deleteRestaurantHandler);
+restaurantRouter.post("/updateQueueState", updateQueueStateHandler);
 
 export default restaurantRouter;

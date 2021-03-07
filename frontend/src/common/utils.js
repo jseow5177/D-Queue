@@ -69,3 +69,17 @@ export function buffer_to_blobUrl(buffer) {
 
   return blob_url;
 }
+
+export function list_to_obj(lst, index_key) {
+  let obj = {};
+
+  lst.forEach((item) => {
+    obj[item[index_key]] = item;
+  });
+
+  return obj;
+}
+
+export function img_resize(imgURL, size) {
+  return imgURL.slice(0, 49) + size + imgURL.slice(49);
+}

@@ -46,11 +46,17 @@ const restaurantSchema = new Schema(
     openingHours: {
       type: String,
     },
+    priceRange: {
+      type: String,
+    },
+    category: {
+      type: String,
+    },
     //To implement reference to user schema
     admin: {
       type: Boolean,
     },
-    image: [{ type: Buffer }],
+    image: [{ type: String }],
   },
   { timestamps: true }
 );

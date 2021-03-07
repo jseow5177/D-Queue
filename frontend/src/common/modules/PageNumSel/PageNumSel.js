@@ -4,7 +4,7 @@ import styles from "./PageNumSel.module.scss";
 
 import { Button, ButtonGroup } from "@material-ui/core";
 
-const pageNums = [1, 2, 3, 4];
+const pageNums = [];
 
 export default function PageNumSel(props) {
   return (

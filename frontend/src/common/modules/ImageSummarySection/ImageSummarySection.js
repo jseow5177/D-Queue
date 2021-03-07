@@ -5,19 +5,29 @@ import CardActionArea from "@material-ui/core/CardActionArea";
 import CardMedia from "@material-ui/core/CardMedia";
 
 import styles from "./ImageSummarySection.module.scss";
-import { buffer_to_blobUrl } from "../../utils";
+import { img_resize } from "../../utils";
 
 function ImageRow(props) {
   return (
     <div className={styles.imagesRowContainer}>
       <Grid container className={styles.imageRow}>
         {props.images.map((image, index) => {
-          if(index >= props.maxNum)
-            return undefined;
+          if (index >= props.maxNum) return undefined;
           return (
             <Grid item xs key={index} className={styles.imageGridItem}>
-              <Card elevation={index === Number(props.currTitleImage) ? 8 : undefined}>
-                <CardActionArea onClick={props.onImageClick} className={index === Number(props.currTitleImage) ? styles.selectedImage : undefined}>
+              <Card
+                elevation={
+                  index === Number(props.currTitleImage) ? 8 : undefined
+                }
+              >
+                <CardActionArea
+                  onClick={props.onImageClick}
+                  className={
+                    index === Number(props.currTitleImage)
+                      ? styles.selectedImage
+                      : undefined
+                  }
+                >
                   <CardMedia image={image} component="img" id={index} />
                 </CardActionArea>
               </Card>
@@ -49,20 +59,27 @@ export default function ImageSummarySection(props) {
   }
 
   const { images: imageArr } = props;
+
   useEffect(() => {
     const imgArr = [];
     imageArr.map((img) => {
-      img = buffer_to_blobUrl(img.data);
-
+      if (img.includes("cloudinary")) {
+        img = img_resize(img, "w_400,h_350,c_fill/");
+      }
       imgArr.push(img);
     });
     setImages(imgArr);
-  }, []);
+  }, [imageArr]);
 
   return (
     <>
       <TitleImage image={images[currTitleImage]} />
-      <ImageRow images={images} currTitleImage={currTitleImage} onImageClick={onImageClick} maxNum={props.maxNum}/>
+      <ImageRow
+        images={images}
+        currTitleImage={currTitleImage}
+        onImageClick={onImageClick}
+        maxNum={props.maxNum}
+      />
     </>
-  )
+  );
 }

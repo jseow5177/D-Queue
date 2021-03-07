@@ -17,7 +17,7 @@ function MerchantDescription(props) {
         Phone: {props.info.contact}
       </Typography>
       <Typography className={styles.descField} variant="body1">
-        Current Serving Number: {props.info.currentNumber}
+        Number of people in queue: {props.info.queueNum}
       </Typography>
       <Typography className={styles.descField} variant="body1">
         Average Waiting time: {props.info.averageWaiting} minutes

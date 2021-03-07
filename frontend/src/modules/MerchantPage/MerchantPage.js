@@ -1,17 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 import ApiService from "../../common/services/api.service";
-import { createSocket } from "../../sockets/sockets";
-import styles from "./MerchantPage.module.scss";
 
-import { CircularProgress } from "@material-ui/core";
 import MerchantDetails from "./MerchantDetails/MerchantDetails";
 import QueueDialog from "../../common/modules/QueueDialog/QueueDialog";
+import CustomLoading from "../../common/modules/CustomLoading/CustomLoading";
 
 export default function MerchantPage(props) {
-  let history = useHistory();
   const { match } = props;
   const [restaurantDetail, setRestaurantDetail] = useState({});
   const [loading, setLoading] = useState(true);
@@ -20,11 +16,11 @@ export default function MerchantPage(props) {
 
   useEffect(async () => {
     let params = {
-      restaurantId: match.params.name,
+      restaurantID: match.params.name,
     };
     setLoading(true);
     let res = await ApiService.get("/restaurant/retrieve", params);
-    setRestaurantDetail(res.data);
+    setRestaurantDetail(res.data);  
     setLoading(false);
   }, []);
 
@@ -33,7 +29,7 @@ export default function MerchantPage(props) {
   return (
     <div>
       {loading ? (
-        <CircularProgress className={styles.loadingIcon} />
+        <CustomLoading />
       ) : (
         <>
           <QueueDialog

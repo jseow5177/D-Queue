@@ -14,7 +14,7 @@ import { Link } from "react-router-dom";
 
 export default function CardItem(props) {
   return (
-    <Grid item xs={12} sm={6} md={4} lg={3} xl={2}>
+    <Grid item xs={12} sm={6} md={4} lg={3} xl={3}>
       <Card>
         <CardActionArea>
           {props.image && (
@@ -30,6 +30,9 @@ export default function CardItem(props) {
           <CardContent>
             <Typography variant="h5">{props.title}</Typography>
             <Typography variant="body2">{props.description}</Typography>
+            <Typography variant="body2">
+              Number of people in queue: {props.queueNum}
+            </Typography>
           </CardContent>
         </CardActionArea>
         {(props.queue || props.info) && (

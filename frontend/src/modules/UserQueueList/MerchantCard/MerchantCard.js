@@ -1,11 +1,12 @@
 import { Link } from "react-router-dom";
-import React, { useState } from "react";
+import React from "react";
 
 import ApiService from "../../../common/services/api.service";
 import { QUEUESTATE } from "../../../constants/config";
 import styles from "./MerchantCard.module.scss";
 
 import { Button, Grid, Paper, Typography } from "@material-ui/core";
+import { img_resize } from "../../../common/utils";
 
 const MerchantCard = ({ info, queueList, setQueueList }) => {
   let { restaurant, pax, queueNum } = info;
@@ -27,14 +28,14 @@ const MerchantCard = ({ info, queueList, setQueueList }) => {
   };
 
   return (
-    <Grid item>
+    <Grid item className={styles.gridContainer}>
       <Paper elevation={5} className={styles.cardContainer}>
         <Grid container>
           <Grid item xs={4} md={3}>
             <Link to={`/merchant/${restaurant._id}`}>
               <img
                 className={styles.cardImg}
-                src="https://ucarecdn.com/6c3107c4-7564-429a-acb0-f0d833355982/"
+                src={img_resize(restaurant.image[0], "w_350,c_fill/")}
               />
             </Link>
           </Grid>

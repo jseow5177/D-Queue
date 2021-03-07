@@ -6,8 +6,8 @@ import CardGrid from "../../../common/modules/CardGrid/CardGrid";
 import PageNumSel from "../../../common/modules/PageNumSel/PageNumSel";
 
 export default function TrendingSummary(props) {
+  const [loading, setLoading] = useState(false);
   const [restaurantList, setRestaurantList] = useState([]);
-  const [loading, setLoading] = useState(true);
 
   useEffect(async () => {
     let params = {
@@ -16,7 +16,6 @@ export default function TrendingSummary(props) {
     };
     setLoading(true);
     let res = await ApiService.get("/restaurant/restaurantList", params);
-
     setLoading(false);
     setRestaurantList(res.data);
   }, []);
@@ -24,7 +23,7 @@ export default function TrendingSummary(props) {
   return (
     <>
       <CardGrid
-        spacing="6"
+        spacing="10"
         gridItems={restaurantList}
         loading={loading}
         justify="flex-start"

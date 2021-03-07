@@ -14,28 +14,37 @@ import SectionTitle from "../../common/modules/SectionTitle/SectionTitle";
 const getFilterState = (filterOptions) => {
   let filterState = {};
 
-  Object.keys(filterOptions).map((categories) => {
-    return filterOptions[categories].map((option) => {
-      return (filterState[option] = false);
-    });
+  Object.keys(filterOptions).map(categories => {
+    filterState[categories] = {}
+    return filterOptions[categories].map(option => {
+      return filterState[categories][option] = false
+    })
   });
 
-  return filterState;
+  return filterState
 };
 
-const BrowsePage = () => {
+const BrowsePage = ({match}) => {
   const windowDimensions = useWindowDimensions();
   const [restaurantList, setRestaurantList] = useState([]);
   const [loading, setLoading] = useState(true);
   const [pageNum, setPageNum] = useState(1);
   const [popOverAnchor, setPopOverAnchor] = useState(false);
   const [filterState, setFilterState] = useState(getFilterState(filterOptions));
-  const PAGE_SIZE = 2;
-  const updateFilter = (filterOption, selected) => {
-    return setFilterState({ ...filterState, [filterOption]: selected });
+  const PAGE_SIZE = 20;
+
+  const updateFilter = (key, filterOption, selected) => {
+    const newFilter = {...filterState}
+    newFilter[key][filterOption] = selected
+    return setFilterState(newFilter);
   };
 
   useEffect(async () => {
+    let category = match.params.category;
+    let newFilterState = {...filterState};
+    newFilterState['category'][category] = true
+    setFilterState(newFilterState)
+
     let params = {
       page_num: 1,
       page_size: PAGE_SIZE,
@@ -77,6 +86,7 @@ const BrowsePage = () => {
       <CardGrid
         justify="flex-start"
         spacing="6"
+        filterState={filterState}
         gridItems={restaurantList}
         loading={loading}
       />

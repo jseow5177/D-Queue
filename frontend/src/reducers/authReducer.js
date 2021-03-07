@@ -1,4 +1,4 @@
-import { LOGIN, LOGOUT } from "../reduxConst/authConst";
+import { LOGIN, LOGOUT, ADD_RESTAURANT } from "../reduxConst/authConst";
 
 const initialState = {};
 
@@ -12,6 +12,13 @@ export default function authReducer(state = initialState, action) {
 
     case LOGOUT: {
       return {};
+    }
+
+    case ADD_RESTAURANT: {
+      return {
+        ...state,
+        ...action.payload,
+      };
     }
 
     default:

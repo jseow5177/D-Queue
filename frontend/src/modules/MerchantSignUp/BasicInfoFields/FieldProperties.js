@@ -63,4 +63,18 @@ export const fieldProps =
         required: true,
         error: false
     },
+    "Food Category": {
+        width: "half",
+        type: "select",
+        required: true,
+        error: false,
+        options: ["American", "Japanese", "Korean", "Malay", "Chinese", "Indian", "Thai", "Mexican"],
+    },
+    "Price Range": {
+        width: "half",
+        type: "select",
+        required: true,
+        error: false,
+        options: ["$", "$$", "$$$"],
+    },
 }

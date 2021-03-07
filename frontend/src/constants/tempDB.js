@@ -62,7 +62,11 @@ export const items = [
 ];
 
 export const filterOptions = {
-  Price: ["$", "$$", "$$$"],
-  Category: ["American", "Mexican", "Italian", "Japanese", "Thai", "India"],
-  "Waiting time": ["30 mins", "45 mins", "60 mins", "75 mins", "90 mins"],
+  priceRange: ["$", "$$", "$$$"],
+  category: ["American", "Mexican", "Italian", "Japanese", "Thai", "India"],
 };
+
+export const subtitleMapping = {
+  priceRange: "Price Range",
+  category: "Category",
+}

@@ -1,6 +1,7 @@
 import React from "react";
-import styles from "./MerchantSignUp.module.scss";
 import { useWindowDimensions } from "../../common/utils";
+import { useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 import DesktopStepper from "./DesktopStepper/DesktopStepper";
 import BasicInfoFields from "./BasicInfoFields/BasicInfoFields";
@@ -11,6 +12,8 @@ import { generateStepContent } from "./StepContent";
 import { sortOperatingHours } from "./SortOperatingHours";
 
 import ApiService from "../../common/services/api.service.js";
+import { setRestaurant } from "../../actions/authActions";
+import CustomLoading from "../../common/modules/CustomLoading/CustomLoading";
 
 export default function MerchantSignUp() {
   //Get width for determining whether to use mobile or desktop stepper for signup page
@@ -20,6 +23,9 @@ export default function MerchantSignUp() {
   const [imageArr, setImageArr] = React.useState([]);
   const [rawImgArr, setRawImgArr] = React.useState([]);
   const [verifier, setVerifier] = React.useState();
+  const [loading, setLoading] = React.useState(false);
+  const user = useSelector((state) => state.auth);
+  let history = useHistory();
 
   const submitForm = React.useCallback(async () => {
     const sortedOperatingHours = sortOperatingHours(operatingHours);
@@ -27,6 +33,7 @@ export default function MerchantSignUp() {
       ...merchantInfo,
       openingHours: sortedOperatingHours,
       admin: "false",
+      userID: user._id,
     };
 
     let data = new FormData();
@@ -39,10 +46,22 @@ export default function MerchantSignUp() {
       data.append("upload", img);
     });
 
+    setLoading(true);
     const res = await ApiService.post("/restaurant/register", data);
 
+    if (res.status === 200) {
+      console.log(res.data);
+      setRestaurant({
+        restaurant: {
+          _id: res.data.restaurantID,
+          restaurantName: res.data.restaurantName,
+        },
+      });
+      history.push(`/merchant/dashboard/${res.data.restaurantID}`);
+    }
+
     return res;
-  }, [merchantInfo, operatingHours]);
+  }, [merchantInfo, operatingHours, rawImgArr]);
 
   const stepContent = [
     generateStepContent(
@@ -83,12 +102,16 @@ export default function MerchantSignUp() {
 
   return (
     <>
+      {loading ? (
+        <CustomLoading message="Hold on a second, we are setting up your restaurant!" />
+      ) : (
       <DesktopStepper
         stepContent={stepContent}
         width={width}
         verifier={verifier}
         submit={submitForm}
       />
+      )}
     </>
   );
 }

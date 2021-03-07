@@ -1,5 +1,6 @@
 import { Button, Grid, Typography } from "@material-ui/core";
 import React from "react";
+import {Link} from "react-router-dom";
 import styles from "./ButtonGrid.module.scss";
 
 function ButtonGrid(props) {
@@ -55,7 +56,12 @@ function ButtonGridItem(props) {
   let item = props.items[row * cols + col];
   return (
     <Grid item className={styles.buttonGridItem} xs={4} sm={3} md={2} xl={1}>
-      <Button className={styles.categoryBtn} variant="outlined">
+      <Button
+        component={Link}
+        to={`/browse/${item}`}
+        className={styles.categoryBtn}
+        variant="outlined"
+      >
         <Typography variant="body1">{item}</Typography>
       </Button>
     </Grid>

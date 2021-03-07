@@ -53,7 +53,9 @@ export const loginHandler = async (req, res, next) => {
   }
 
   try {
-    const user = await User.findOne({ email });
+    const user = await await User.findOne({ email }).populate("restaurant", [
+      "restaurantName",
+    ]);
 
     if (!user) {
       return next(new UnauthorizedError("Invalid credentials"));
@@ -167,6 +169,7 @@ export const enterQueueHandler = async (req, res, next) => {
     queue = await Queue.populate(queue, { path: "user" });
 
     io.of(restaurantID).emit("user enter queue", queue);
+
     res.sendStatus(200);
   } catch (error) {
     next(error);
@@ -180,7 +183,7 @@ export const getQueueListHandler = async (req, res, next) => {
     let queueList = await Queue.find({
       $and: [{ user: userID }, { state: { $lte: QUEUESTATE.NOTIFIED } }],
     })
-      .populate("restaurant", ["restaurantName", "contact"])
+      .populate("restaurant", ["restaurantName", "contact", "image"])
       .lean();
 
     queueList = await Promise.all(

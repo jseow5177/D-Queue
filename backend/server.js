@@ -29,7 +29,7 @@ async function run() {
     // Error Handler (Must be last piece of middleware)
     app.use(errorHandler);
 
-    // if (process.env.NODE_ENV === "production") {
+    if (process.env.NODE_ENV === "production") {
       const __dirname = path.resolve();
       const dir = path.join(__dirname, "frontend/build");
       
@@ -45,7 +45,7 @@ async function run() {
         
         res.sendFile(path_dir);
       });
-    // }
+    }
 
     // Listen to port
     const server = app.listen(PORT, (err) => {

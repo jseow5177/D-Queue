@@ -1,19 +1,53 @@
 @import "../../../../public/styles/colors.scss";
 @import "../../../../public/styles//layouts.scss";
 
+.merchantContainer {
+  display: flex;
+  height: 100vh;
+  justify-content: center;
+  padding-top: 2rem;
+  background-color: #F5F1F1 !important;
+}
+
 .merchantPaper {
+  display: flex;
+  align-items: center;
   margin: 1% 5%;
-  padding: 20px 0;
+  width: 70%;
+  max-height: 80%;
+  box-shadow: 1px 6px 15px #888888 !important;
+  
 }
 
 .merchantDescContainer {
   margin: auto 7%;
+  padding-top: 3rem;
 
+  .descTitle {
+    color: #5b5b5b;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 4rem;
+    margin-bottom: 2rem;
+  }
+
+  .descContent {
+    font-size: 1.5rem;
+    font-family: 'Montserrat', sans-serif;
+    line-height: 2;
+    font-weight: 500;
+    color: #5b5b5b;
+
+  }
   .descField {
     margin: 10px auto;
   }
 
   .queueBtn {
-    margin-top: 25px;
+    margin-top: 3rem;
+    color: $white;
+    min-width: 10rem;
+    border-radius: 1rem;
+    background-color: #00bd56;
+
   }
 }

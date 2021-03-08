@@ -4,6 +4,8 @@
 .pageNumDiv{
     display: flex;
     margin: 20px;
+    margin-top: 6rem;
+    margin-bottom: 4rem;
 }
 
 .pageNumGroup{
@@ -13,4 +15,9 @@
 .viewAllLink{
     text-decoration-line: inherit;
     color:inherit;
+}
+
+.button {
+    color: #f5b461 !important;
+    border-color: #f5b461 !important;
 }

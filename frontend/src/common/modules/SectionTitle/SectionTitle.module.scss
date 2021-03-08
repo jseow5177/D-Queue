@@ -1,9 +1,19 @@
 @import "../../../../public/styles/colors.scss";
 @import "../../../../public/styles//layouts.scss";
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap');
 
 div .sectionTitle{
-    margin-top: 5%;
-    margin-bottom: 8%;
+    margin-top: 3rem;
+    margin-bottom: 3rem;
     background-color: $light-orange;
     padding: 8px 10px;
+    font-family: 'Montserrat', sans-serif;
+    color: $dark-red;
+    min-width: 8rem;
+    border-radius: 0.5rem;
+    box-shadow: 1px 3px 10px #888888;
+}
+
+div .text {
+    font-size: 1.5rem;
 }

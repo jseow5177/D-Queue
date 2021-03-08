@@ -1,3 +1,6 @@
+@import "../../../../public/styles/colors.scss";
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap');
+
 .categoryBtn {
   padding-left: 20px;
   padding-right: 20px;
@@ -5,14 +8,24 @@
   height: 10vh;
 }
 
+.buttonGridItem {
+  background-color: $coffee-brown;
+  box-shadow: 0.5px 0px 5px #888888;
+}
+
 .buttonGrid {
   //Remove bottom border for all rows except last row
   .buttonGridRow:not(:last-child) .categoryBtn {
+    border-color: $dark-pink;
+    border-width: 0.2rem;
     border-bottom-width: 0;
   }
 
   //Remove right side border of all columns except last col
   .buttonGridRow .buttonGridItem:not(:last-child) .categoryBtn{
+    border-color: $dark-pink;
+    border-left-width: 0.2rem;
+    border-bottom-width: 0.2rem;
     border-right-width: 0;
   }
 
@@ -26,6 +39,8 @@
 
     //First row last col
     .buttonGridItem:last-child .categoryBtn {
+      border-color: $dark-pink;
+      border-bottom-width: 0.2rem;
       border-top-left-radius: 0;
       border-bottom-left-radius: 0;
       border-bottom-right-radius: 0;
@@ -41,6 +56,9 @@
     }
     //Last row last col
     .buttonGridItem:last-child .categoryBtn {
+      border-color: $dark-pink;
+      border-width: 0.2rem;
+      border-top-width: 0.1rem;
       border-top-left-radius: 0;
       border-top-right-radius: 0;
       border-bottom-left-radius: 0;
@@ -70,5 +88,12 @@
   .buttonGridRow .buttonGridItem:last-child .categoryBtn {
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
+    
   }
+}
+
+.categoryText {
+  color: $dark-red;
+  font-weight: bold;
+  font-family: 'Montserrat', sans-serif;
 }

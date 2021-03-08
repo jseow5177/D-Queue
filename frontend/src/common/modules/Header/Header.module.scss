@@ -4,16 +4,30 @@
 .navBar {
   background-color: $light-orange !important;
   clear: both;
+  min-height: 4.5rem;
+  justify-content: center;
+  box-shadow: 1px 8px 10px #888888;
+  font-family: 'Montserrat', sans-serif;
 }
 
-.navBarTitle {
+div .navBarTitle {
   flex-grow: 1;
-  color: $black;
+  color: $white;
+}
+
+div .navBarIcon {
+  font-size: 3rem;
+  color: $dark-red;
+  margin-right: 1rem;
 }
 
 .navBar .navBarBtn {
-  background-color: $very-light-gray;
-  margin: auto 5px;
+  margin: auto 10px;
+  color: $dark-red;
+}
+
+.navBarBtn:hover{
+  transform: scale(1.05);
 }
 
 .navBarHomeLink {

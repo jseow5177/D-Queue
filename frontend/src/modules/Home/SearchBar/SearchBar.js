@@ -7,16 +7,18 @@ import styles from "./SearchBar.module.scss";
 export default function SearchBar(props) {
   return (
     <div className={styles.searchBarDiv}>
-      <Paper component="form" className={styles.searchBar}>
-        <InputBase
-          className={styles.searchInput}
-          fullWidth
-          placeholder="Search for restaurants"
-        />
-        <IconButton type="submit">
-          <SearchIcon />
-        </IconButton>
-      </Paper>
+      <h1 className={styles.bannerTitle}>Food is better without queueing</h1>
     </div>
   );
 }
+
+// <Paper component="form" className={styles.searchBar}>
+//   <InputBase
+//     className={styles.searchInput}
+//     fullWidth
+//     placeholder="Search for restaurants"
+//   />
+//   <IconButton type="submit">
+//     <SearchIcon />
+//   </IconButton>
+// </Paper>;

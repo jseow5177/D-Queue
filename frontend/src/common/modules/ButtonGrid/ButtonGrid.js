@@ -62,7 +62,7 @@ function ButtonGridItem(props) {
         className={styles.categoryBtn}
         variant="outlined"
       >
-        <Typography variant="body1">{item}</Typography>
+        <h3 className={styles.categoryText}>{item}</h3>
       </Button>
     </Grid>
   );

@@ -16,6 +16,7 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { createSocket } from "../../../sockets/sockets";
 import ApiService from "../../services/api.service";
+import styles from "./QueueDialog.module.scss"
 
 const QueueDialog = ({ dialog, setDialog, user, restaurantDetail }) => {
   let history = useHistory();
@@ -48,28 +49,30 @@ const QueueDialog = ({ dialog, setDialog, user, restaurantDetail }) => {
   };
 
   return (
-    <Dialog open={dialog} onClose={closeHandler}>
-      <DialogTitle>Please enter your details</DialogTitle>
-      <DialogContent>
-        <FormControl>
-          <TextField select label="Pax" value={pax} onChange={paxHandler}>
-            {Array.from(Array(11), (_, index) => {
-              return <MenuItem value={index}>{index}</MenuItem>;
-            })}
-          </TextField>
+    <Dialog open={dialog} onClose={closeHandler} className={styles.dialogDiv}>
+      <div className={styles.dialogContainer}>
+        <DialogTitle>Please enter your details</DialogTitle>
+        <DialogContent>
+          <FormControl>
+            <TextField select label="Pax" value={pax} onChange={paxHandler}>
+              {Array.from(Array(11), (_, index) => {
+                return <MenuItem value={index}>{index}</MenuItem>;
+              })}
+            </TextField>
 
-          <TextField
-            id="standard-basic"
-            label="Contact No"
-            value={contact}
-            onChange={contactHandler}
-          />
-        </FormControl>
-        <DialogActions>
-          <Button onClick={closeHandler}> Cancel </Button>
-          <Button onClick={queueHandler}>Queue Now</Button>
-        </DialogActions>
-      </DialogContent>
+            <TextField
+              id="standard-basic"
+              label="Contact No"
+              value={contact}
+              onChange={contactHandler}
+            />
+          </FormControl>
+          <DialogActions>
+            <Button onClick={closeHandler}> Cancel </Button>
+            <Button onClick={queueHandler}>Queue Now</Button>
+          </DialogActions>
+        </DialogContent>
+      </div>
     </Dialog>
   );
 };

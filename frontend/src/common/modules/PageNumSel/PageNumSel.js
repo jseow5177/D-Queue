@@ -14,8 +14,8 @@ export default function PageNumSel(props) {
           return <Button key={index}>{num}</Button>;
         })}
 
-        <Button>
-          <Link className={styles.viewAllLink} to="browse">View All</Link>
+        <Button variant="outlined" className={styles.button}>
+          <Link className={styles.viewAllLink} to="browse"><h2>View More</h2></Link>
         </Button>
       </ButtonGroup>
     </div>

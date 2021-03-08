@@ -11,4 +11,8 @@ app.use(cookieParser());
 app.use(cors());
 app.use("*", cloudinaryConfig);
 
+if (process.env.NODE_ENV === 'production') {
+    app.use(express.static('../frontend/build/'))
+}
+
 export default app;

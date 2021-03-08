@@ -41,9 +41,11 @@ const BrowsePage = ({match}) => {
 
   useEffect(async () => {
     let category = match.params.category;
-    let newFilterState = {...filterState};
-    newFilterState['category'][category] = true
-    setFilterState(newFilterState)
+    if (category) {
+      let newFilterState = { ...filterState };
+      newFilterState["category"][category] = true;
+      setFilterState(newFilterState);
+    }
 
     let params = {
       page_num: 1,
@@ -91,8 +93,12 @@ const BrowsePage = ({match}) => {
         loading={loading}
       />
       <ButtonGroup variant="outlined" className={styles.buttonDiv}>
-        <Button className={styles.viewButton} onClick={updatePageNum}>
-          View More
+        <Button
+          variant="outlined"
+          className={styles.viewButton}
+          onClick={updatePageNum}
+        >
+          <h2>View More</h2>
         </Button>
       </ButtonGroup>
     </div>

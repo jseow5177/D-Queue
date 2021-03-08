@@ -44,7 +44,7 @@ function TitleImage(props) {
     <div className={styles.imagesContainer}>
       <Card elevation={4}>
         <CardActionArea className={styles.titleImageActionArea}>
-          <CardMedia image={props.image} component="img" />
+          <CardMedia className={styles.titleImage} image={props.image} component="img" />
         </CardActionArea>
       </Card>
     </div>

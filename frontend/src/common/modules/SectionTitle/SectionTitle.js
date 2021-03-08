@@ -9,9 +9,9 @@ export default function SectionTitle(props) {
       <Grid container justify="center">
         <Grid item>
           <Paper className={styles.sectionTitle} component="div">
-            <Typography variant="h5" align="center">
+            <h3 variant="h5" align="center" className={styles.text}>
               {props.title}
-            </Typography>
+            </h3>
           </Paper>
         </Grid>
       </Grid>

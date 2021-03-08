@@ -67,6 +67,7 @@ function App() {
             <Route path="/merchant/:name" exact component={MerchantPage} />
             <Route path="/merchant-sign-up" component={MerchantSignUp} />
             <Route path="/browse/:category" component={BrowsePage} />
+            // <Route path="/browse/" component={BrowsePage} />
             <Route path="/sign/:user" component={UserSignUp} />
             <Route
               path="/merchant/dashboard/:name"

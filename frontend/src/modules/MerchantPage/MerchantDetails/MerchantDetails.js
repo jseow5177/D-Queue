@@ -9,25 +9,21 @@ import ImageSummarySection from "../../../common/modules/ImageSummarySection/Ima
 function MerchantDescription(props) {
   return (
     <div className={styles.merchantDescContainer}>
-      <Typography variant="h4">{props.info.restaurantName}</Typography>
-      <Typography className={styles.descField} variant="body1">
+      <h1 className={styles.descTitle}>{props.info.restaurantName}</h1>
+      <hr />
+      <p className={styles.descContent}>
         Location: {props.info.address1 + " " + props.info.postCode}
-      </Typography>
-      <Typography className={styles.descField} variant="body1">
-        Phone: {props.info.contact}
-      </Typography>
-      <Typography className={styles.descField} variant="body1">
+      </p>
+      <p className={styles.descContent}>Phone: {props.info.contact}</p>
+      <p className={styles.descContent}>
         Number of people in queue: {props.info.queueNum}
-      </Typography>
-      <Typography className={styles.descField} variant="body1">
-        Average Waiting time: {props.info.averageWaiting} minutes
-      </Typography>
+      </p>
       <Button
         className={styles.queueBtn}
         onClick={props.buttonHandler}
         variant="contained"
       >
-        Queue
+        <h1>Queue</h1>
       </Button>
     </div>
   );
@@ -35,7 +31,7 @@ function MerchantDescription(props) {
 
 export default function MerchantDetails(props) {
   return (
-    <div>
+    <div className={styles.merchantContainer}>
       <Paper className={styles.merchantPaper}>
         <Grid container justify="flex-start">
           <Grid item sm={12} md={6}>

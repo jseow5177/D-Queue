@@ -16,6 +16,7 @@ export default function TrendingSummary(props) {
     };
     setLoading(true);
     let res = await ApiService.get("/restaurant/restaurantList", params);
+    console.log(res.data)
     setLoading(false);
     setRestaurantList(res.data);
   }, []);

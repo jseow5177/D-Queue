@@ -13,10 +13,13 @@ app.use(cors());
 app.use("*", cloudinaryConfig);
 
 if (process.env.NODE_ENV === 'production') {
+    const __dirname = path.resolve();
     app.use(express.static('frontend/build'))
     app.get("*", (req, res) => {
-        console.log("hi")
-        res.sendFile(path.resolve(__dirname, "../frontend", "build", "index.html"))
+        console.log(__dirname)
+        const path_dir = path.join(__dirname, "frontend", "build", "index.html");
+        console.log(path_dir)
+        res.sendFile(path_dir)
     })
 }
 

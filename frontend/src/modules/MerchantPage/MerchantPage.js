@@ -19,7 +19,7 @@ export default function MerchantPage(props) {
       restaurantID: match.params.name,
     };
     setLoading(true);
-    let res = await ApiService.get("/restaurant/retrieve", params);
+    let res = await ApiService.get("api/restaurant/retrieve", params);
     setRestaurantDetail(res.data);  
     setLoading(false);
   }, []);

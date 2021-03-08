@@ -10,8 +10,7 @@ const configs = {
   },
 };
 
-// const base_url = configs[process.env.NODE_ENV];
-const base_url = configs['development'].SERVER_URI;
+const base_url = configs[process.env.NODE_ENV].SERVER_URI;
 
 const ApiService = {
 

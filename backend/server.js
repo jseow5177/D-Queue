@@ -7,6 +7,7 @@ import userRouter from "./routes/userRouter.js";
 import restaurantRouter from "./routes/restaurantRouter.js";
 import errorHandler from "./handlers/errorHandler.js";
 import { initSocket } from "./handlers/socketHandler.js";
+import path from "path"
 
 const PORT = config.port;
 const mongoUri = config.mongoUri;

@@ -64,7 +64,7 @@ const BrowsePage = ({match}) => {
       page_size: PAGE_SIZE,
     };
 
-    let res = await ApiService.get("/restaurant/restaurantList", params);
+    let res = await ApiService.get("api/restaurant/restaurantList", params);
     setRestaurantList([...restaurantList, ...res.data]);
     setPageNum(pageNum + 1);
   };

@@ -15,7 +15,7 @@ export default function TrendingSummary(props) {
       page_size: 8,
     };
     setLoading(true);
-    let res = await ApiService.get("api/restaurant/restaurantList", params);
+    let res = await ApiService.get("/restaurant/restaurantList", params);
     console.log(res.data)
     setLoading(false);
     setRestaurantList(res.data);

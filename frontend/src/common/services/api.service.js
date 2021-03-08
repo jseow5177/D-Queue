@@ -1,6 +1,18 @@
 import TokenService from './token.service'
 import axios from 'axios'
 
+const configs = {
+  development: {
+    SERVER_URI: "http://localhost:5000/api",
+  },
+  production: {
+    SERVER_URI: "https://dqueue97.herokuapp.com/api",
+  },
+};
+
+// const base_url = configs[process.env.NODE_ENV];
+const base_url = configs['development'].SERVER_URI;
+
 const ApiService = {
 
   setAuthHeader() {
@@ -15,7 +27,7 @@ const ApiService = {
   },
 
   get(resource, params = null) {
-    return axios.get(resource, { params })
+    return axios.get(`${base_url+resource}`, { params })
   },
 
   post(resource, data) {

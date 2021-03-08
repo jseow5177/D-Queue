@@ -35,14 +35,14 @@ async function run() {
       
       app.use(express.static(dir));
       app.get("*", (req, res) => {
-        console.log(__dirname);
+        
         const path_dir = path.join(
           __dirname,
           "frontend",
           "build",
           "index.html"
         );
-        console.log(path_dir);
+        
         res.sendFile(path_dir);
       });
     // }

@@ -7,7 +7,7 @@ import {
   resetPassword,
   logoutHandler,
   enterQueueHandler,
-  getQueueNumHandler,
+  getQueueListHandler,
   checkAuthHandler,
 } from "../handlers/userHandler.js";
 import { isAuthenticated } from "../middleware/auth.js";
@@ -24,7 +24,7 @@ userRouter.post("/signup", signupHandler);
 userRouter.post("/resetPassword/:signedToken", resetPassword);
 
 // Queue
-userRouter.get("/queueNum", getQueueNumHandler);
+userRouter.post("/queueList", getQueueListHandler);
 userRouter.post("/enterQueue", enterQueueHandler);
 
 export default userRouter;

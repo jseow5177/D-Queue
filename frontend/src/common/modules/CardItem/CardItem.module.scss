@@ -4,3 +4,37 @@
 .cardImage{
     height: 5%;
 }
+
+.cardDiv {
+    margin-top: 1rem !important;
+}
+
+.cardDiv .cardItem {
+    max-width: 23rem;
+    box-shadow: 3px 3px 15px #888888;
+}
+
+.cardDiv .cardItem:hover {
+    transform: scale(1.03);
+    box-shadow: 3px 8px 15px #888888;
+}
+
+.cardTitle {
+    font-family: 'Montserrat', sans-serif;
+    color: #5b5b5b;
+    margin-top: 0.8rem;
+    letter-spacing: 1px;
+}
+
+.cardSubtitle {
+    font-family: 'Montserrat', sans-serif;
+    color: #5b5b5b;
+    font-weight: 550; 
+    word-spacing: 3px;
+    font-size: 1rem;
+}
+
+.cardLink {
+  text-decoration: inherit;
+  color: inherit;
+}

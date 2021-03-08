@@ -1,9 +1,11 @@
 import React from "react";
+
+import { filterOptions, subtitleMapping } from "../../../constants/tempDB";
+import styles from "./FilterPopOver.module.scss";
+
 import { Grid, Popover, Button } from "@material-ui/core";
 import CheckBoxGrid from "../CheckBoxGrid/CheckBoxGrid";
 import SubtitleTag from "../SubtitleTag/SubtitleTag";
-import { filterOptions } from "../../../constants/tempDB";
-import styles from "./FilterPopOver.module.scss";
 
 const FilterPopOver = ({
   popOverAnchor,
@@ -37,10 +39,11 @@ const FilterPopOver = ({
           {Object.keys(filterOptions).map((key, index) => {
             return (
               <Grid item key={index}>
-                <SubtitleTag subtitle={key} />
+                <SubtitleTag subtitle={subtitleMapping[key]} />
                 <CheckBoxGrid
                   options={filterOptions[key]}
                   filterState={filterState}
+                  subtitle={key}
                   updateFilter={updateFilter}
                 />
                 {index < Object.keys(filterOptions).length - 1 && <br />}

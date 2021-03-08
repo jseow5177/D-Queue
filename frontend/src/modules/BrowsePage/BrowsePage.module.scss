@@ -1,3 +1,17 @@
-div .backdrop {
-  z-index: 1;
+div {
+  .backdrop {
+    z-index: 1;
+  }
+
+  .buttonDiv {
+    display: flex;
+    justify-content: center;
+  }
+
+  .viewButton {
+    margin: 8rem auto;
+    color: #f5b461 !important;
+    border-color: #f5b461 !important;
+    font-family: 'Montserrat', sans-serif;
+  }
 }

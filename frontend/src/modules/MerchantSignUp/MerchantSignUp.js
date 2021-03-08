@@ -1,6 +1,7 @@
 import React from "react";
-import styles from "./MerchantSignUp.module.scss";
 import { useWindowDimensions } from "../../common/utils";
+import { useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 import DesktopStepper from "./DesktopStepper/DesktopStepper";
 import BasicInfoFields from "./BasicInfoFields/BasicInfoFields";
@@ -11,6 +12,8 @@ import { generateStepContent } from "./StepContent";
 import { sortOperatingHours } from "./SortOperatingHours";
 
 import ApiService from "../../common/services/api.service.js";
+import { setRestaurant } from "../../actions/authActions";
+import CustomLoading from "../../common/modules/CustomLoading/CustomLoading";
 
 export default function MerchantSignUp() {
   //Get width for determining whether to use mobile or desktop stepper for signup page
@@ -18,15 +21,47 @@ export default function MerchantSignUp() {
   const [merchantInfo, setMerchantInfo] = React.useState({});
   const [operatingHours, setOperatingHours] = React.useState([]);
   const [imageArr, setImageArr] = React.useState([]);
+  const [rawImgArr, setRawImgArr] = React.useState([]);
   const [verifier, setVerifier] = React.useState();
+  const [loading, setLoading] = React.useState(false);
+  const user = useSelector((state) => state.auth);
+  let history = useHistory();
 
   const submitForm = React.useCallback(async () => {
     const sortedOperatingHours = sortOperatingHours(operatingHours);
-    const concatData = {...merchantInfo, openingHours: sortedOperatingHours, admin: "false"};
-    const res = await ApiService.post("/restaurant/register", concatData);
-    
+    const concatData = {
+      ...merchantInfo,
+      openingHours: sortedOperatingHours,
+      admin: "false",
+      userID: user._id,
+    };
+
+    let data = new FormData();
+
+    for (let key in concatData) {
+      data.append(key, concatData[key]);
+    }
+
+    rawImgArr.forEach((img) => {
+      data.append("upload", img);
+    });
+
+    setLoading(true);
+    const res = await ApiService.post("/restaurant/register", data);
+
+    if (res.status === 200) {
+      console.log(res.data);
+      setRestaurant({
+        restaurant: {
+          _id: res.data.restaurantID,
+          restaurantName: res.data.restaurantName,
+        },
+      });
+      history.push(`/merchant/dashboard/${res.data.restaurantID}`);
+    }
+
     return res;
-  }, [merchantInfo, operatingHours]);
+  }, [merchantInfo, operatingHours, rawImgArr]);
 
   const stepContent = [
     generateStepContent(
@@ -53,22 +88,30 @@ export default function MerchantSignUp() {
       <UploadPhotos
         imageArr={imageArr}
         setImageArr={setImageArr}
+        rawImgArr={rawImgArr}
+        setRawImgArr={setRawImgArr}
         width={width}
       />
     ),
     generateStepContent(
       "Review",
       "Make sure everything is correct!",
-      <Review
-        merchantInfo={merchantInfo}
-        operatingHours={operatingHours}
-      />
-    )
+      <Review merchantInfo={merchantInfo} operatingHours={operatingHours} />
+    ),
   ];
 
   return (
     <>
-      <DesktopStepper stepContent={stepContent} width={width} verifier={verifier} submit={submitForm}/>
+      {loading ? (
+        <CustomLoading message="Hold on a second, we are setting up your restaurant!" />
+      ) : (
+      <DesktopStepper
+        stepContent={stepContent}
+        width={width}
+        verifier={verifier}
+        submit={submitForm}
+      />
+      )}
     </>
   );
 }

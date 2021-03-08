@@ -2,9 +2,9 @@ import { Checkbox, FormControlLabel, Grid } from "@material-ui/core";
 import React from "react";
 import styles from "./CheckBox.module.scss";
 
-const CheckBox = ({ option, filterState, updateFilter }) => {
+const CheckBox = ({ option, filterState, updateFilter, subtitle }) => {
   const checkBoxChangeHandler = (e) => {
-    updateFilter(e.target.name, e.target.checked);
+    updateFilter(subtitle, e.target.name, e.target.checked);
   };
 
   return (
@@ -13,7 +13,7 @@ const CheckBox = ({ option, filterState, updateFilter }) => {
         control={
           <Checkbox
             onChange={checkBoxChangeHandler}
-            checked={filterState[option]}
+            checked={filterState[subtitle][option]}
             name={option}
             color="default"
           />

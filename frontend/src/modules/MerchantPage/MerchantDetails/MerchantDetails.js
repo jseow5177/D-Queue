@@ -9,21 +9,21 @@ import ImageSummarySection from "../../../common/modules/ImageSummarySection/Ima
 function MerchantDescription(props) {
   return (
     <div className={styles.merchantDescContainer}>
-      <Typography variant="h4">{props.merchantName}</Typography>
-      <Typography className={styles.descField} variant="body1">
-        Location: {props.info.location}
-      </Typography>
-      <Typography className={styles.descField} variant="body1">
-        Phone: {props.info.phone}
-      </Typography>
-      <Typography className={styles.descField} variant="body1">
-        Current Serving Number: {props.info.currentNumber}
-      </Typography>
-      <Typography className={styles.descField} variant="body1">
-        Average Waiting time: {props.info.averageWaiting} minutes
-      </Typography>
-      <Button className={styles.queueBtn} variant="contained">
-        Queue
+      <h1 className={styles.descTitle}>{props.info.restaurantName}</h1>
+      <hr />
+      <p className={styles.descContent}>
+        Location: {props.info.address1 + " " + props.info.postCode}
+      </p>
+      <p className={styles.descContent}>Phone: {props.info.contact}</p>
+      <p className={styles.descContent}>
+        Number of people in queue: {props.info.queueNum}
+      </p>
+      <Button
+        className={styles.queueBtn}
+        onClick={props.buttonHandler}
+        variant="contained"
+      >
+        <h1>Queue</h1>
       </Button>
     </div>
   );
@@ -31,16 +31,17 @@ function MerchantDescription(props) {
 
 export default function MerchantDetails(props) {
   return (
-    <div>
+    <div className={styles.merchantContainer}>
       <Paper className={styles.merchantPaper}>
         <Grid container justify="flex-start">
           <Grid item sm={12} md={6}>
-            <ImageSummarySection images={props.images} />
+            <ImageSummarySection images={props.info.image} />
           </Grid>
           <Grid item xs={12} sm={6}>
             <MerchantDescription
               info={props.info}
-              merchantName={props.merchantName}
+              merchantName={props.info.restaurantName}
+              buttonHandler={props.buttonHandler}
             />
           </Grid>
         </Grid>

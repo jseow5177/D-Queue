@@ -1,4 +1,5 @@
 import React from "react";
+
 import Grid from "@material-ui/core/Grid";
 import CustomTextField from "../../../common/modules/CustomTextField/CustomTextField";
 
@@ -44,7 +45,7 @@ export default function BasicInfoFields(props) {
   function changeHandler(event) {
     setMerchantInfo((prevVal) => {
       const newItem = { ...prevVal };
-      newItem[event.target.id] = event.target.value;
+      newItem[event.target.id || event.target.name] = event.target.value;
       
       return newItem;
     });
@@ -63,6 +64,8 @@ export default function BasicInfoFields(props) {
                 onChange={changeHandler}
                 error={fieldPropsState[item].error}
                 value={merchantInfo[item] || ""}
+                options={fieldPropsState[item].options}
+                name={item}
               />
             </Grid>
           );

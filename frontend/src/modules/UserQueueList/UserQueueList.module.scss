@@ -3,7 +3,7 @@ div {
     justify-content: center;
     margin: 2rem auto;
     padding: 1rem;
-    width: 70%;
+    width: 90%;
   }
 
   .mobileWidth {
@@ -12,5 +12,10 @@ div {
 
   .listGrid {
     margin-top: 0.6rem;
+    justify-content: center;
+  }
+
+  .loadingGrid {
+    margin-top: 10rem;
   }
 }

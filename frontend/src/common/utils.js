@@ -61,3 +61,25 @@ export function validateEmail(email) {
   const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   return re.test(String(email).toLowerCase());
 }
+
+export function buffer_to_blobUrl(buffer) {
+  var bufferArr = new Uint8Array(buffer);
+  let blob = new Blob([bufferArr], { type: "image/jpeg" });
+  let blob_url = URL.createObjectURL(blob);
+
+  return blob_url;
+}
+
+export function list_to_obj(lst, index_key) {
+  let obj = {};
+
+  lst.forEach((item) => {
+    obj[item[index_key]] = item;
+  });
+
+  return obj;
+}
+
+export function img_resize(imgURL, size) {
+  return imgURL.slice(0, 49) + size + imgURL.slice(49);
+}

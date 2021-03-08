@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import styles from "./Header.module.scss";
 
 import { AppBar, Toolbar, Button, Typography } from "@material-ui/core";
+import RestaurantIcon from "@material-ui/icons/Restaurant";
 import ProfileNav from "./ProfileNav/ProfileNav";
 
 export default function Header(props) {
@@ -14,30 +15,31 @@ export default function Header(props) {
     <div>
       <AppBar className={styles.navBar} position="static">
         <Toolbar>
-          <Typography variant="h4" className={styles.navBarTitle}>
+          <RestaurantIcon className={styles.navBarIcon} />
+          <h1 className={styles.navBarTitle}>
             <Link className={styles.navBarHomeLink} to="/">
               DQueue
             </Link>
-          </Typography>
+          </h1>
           {Object.keys(user).length > 0 ? (
             <ProfileNav username={user.first_name} />
           ) : (
             <>
               <Button
-                variant="contained"
+                color="primary"
                 className={styles.navBarBtn}
                 component={Link}
                 to="/sign/merchant"
               >
-                Join as Merchant
+                <h3>Join as Merchant</h3>
               </Button>
               <Button
-                variant="contained"
+                color="primary"
                 className={styles.navBarBtn}
                 component={Link}
                 to="/sign/user"
               >
-                Login
+                <h3>Login</h3>
               </Button>
             </>
           )}

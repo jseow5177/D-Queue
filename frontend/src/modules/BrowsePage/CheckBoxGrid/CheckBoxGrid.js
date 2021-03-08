@@ -2,7 +2,7 @@ import { Grid } from "@material-ui/core";
 import React from "react";
 import CheckBox from "../CheckBox/CheckBox";
 
-const CheckBoxGrid = ({ options, filterState, updateFilter }) => {
+const CheckBoxGrid = ({ options, filterState, updateFilter, subtitle}) => {
   return (
     <div>
       <Grid container>
@@ -12,6 +12,7 @@ const CheckBoxGrid = ({ options, filterState, updateFilter }) => {
               key={index}
               option={option}
               filterState={filterState}
+              subtitle={subtitle}
               updateFilter={updateFilter}
             />
           );

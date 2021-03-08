@@ -3,9 +3,9 @@ import { Fab, Grid } from "@material-ui/core";
 import { Cancel } from "@material-ui/icons";
 import styles from "./FilterTag.module.scss";
 
-const FilterTag = ({ title, updateFilter }) => {
+const FilterTag = ({ category, title, updateFilter }) => {
   const tagClickHandler = () => {
-    updateFilter(title, false);
+    updateFilter(category, title, false);
   };
   return (
     <Grid item>
